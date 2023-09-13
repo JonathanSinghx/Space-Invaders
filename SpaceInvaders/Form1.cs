@@ -9,11 +9,14 @@ namespace SpaceInvaders
             InitializeComponent();
             initalizeGame();
             mainTimer.Start();
+            Load_aliens();
         }
 
         private void Game_Load(object sender, EventArgs e)
         {
 
         }
+
+
     }
 }
