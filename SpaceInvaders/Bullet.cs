@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace SpaceInvaders
 {
-    public class Bullet : Game
+    public class Bullet : GameObject
     {
         //PROPERTIES
         bool damage;
 
         //CONSTRUCTORS
-        public Bullet()
+        public Bullet() : base(new Point(0, 0), 1, 1)
         {
             this.Damage = false;
         }

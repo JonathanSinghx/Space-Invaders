@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceInvaders
 {
-    public class Enemy : Game
+    public class Alien : GameObject
     {
         //PROPERTIES
         bool canShoot;
@@ -14,7 +14,7 @@ namespace SpaceInvaders
         int fireRate;
 
         //CONSTRUCTORS
-        public Enemy()
+        public Alien() : base(new Point(0, 0), 1, 1)
         {
             this.CanShoot = false;
             this.CollisionDamage = false;
