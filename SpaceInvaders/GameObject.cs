@@ -9,12 +9,12 @@ namespace SpaceInvaders
     public class GameObject
     {
         //PROPERTIES
-        string location;
+        Point location;
         int movementSpeed;
         int size;
 
         //CONSTRUCTORS
-        public GameObject(string location, int movementSpeed, int size)
+        public GameObject(Point location, int movementSpeed, int size)
         {
             this.Location = location;
             this.MovementSpeed = movementSpeed;
@@ -22,7 +22,7 @@ namespace SpaceInvaders
         }
 
         //GETTERS AND SETTERS
-        public string Location { get => location; set => location = value; }
+        public Point Location { get => location; set => location = value; }
         public int MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
         public int Size { get => size; set => size = value; }
 
