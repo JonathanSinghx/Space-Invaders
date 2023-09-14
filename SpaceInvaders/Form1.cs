@@ -12,6 +12,7 @@ namespace SpaceInvaders
             Load_aliens();
         }
 
+
         private void Game_Load(object sender, EventArgs e)
         {
 
