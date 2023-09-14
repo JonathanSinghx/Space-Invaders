@@ -14,6 +14,7 @@ namespace SpaceInvaders
         bool initializeRound;
         PictureBox[] aliens;
         int alienSpeed;
+        //int frameCount;
 
 
         //CONSTRUCTORS
@@ -61,6 +62,7 @@ namespace SpaceInvaders
             player.move();
             this.playerBox.Location = player.Location;
             MoveAliens(aliens, alienSpeed);
+            this.player.fireBullet();
         }
 
 
@@ -68,6 +70,7 @@ namespace SpaceInvaders
         {
             this.player = new Player(100);
             this.player.Location = playerBox.Location;
+            this.player.Bullet.Render(this);
         }
 
         public void Load_aliens()
@@ -90,7 +93,7 @@ namespace SpaceInvaders
                 aliens[i].Size = new Size(40, 40);
                 aliens[i].SizeMode = PictureBoxSizeMode.Zoom;
                 aliens[i].BorderStyle = BorderStyle.None;
-                aliens[i].Visible = false; // ensure that the aliens doesn't show up on the start screen
+                //aliens[i].Visible = false; // ensure that the aliens doesn't show up on the start screen
                 this.Controls.Add(aliens[i]);
                 aliens[i].Location = new Point((i + 1) * 60, -60); //arrange the aliens on the screen
             }
@@ -119,9 +122,15 @@ namespace SpaceInvaders
         // access the alien array and display aliens moving from top to bottom
         private void MoveAliens(PictureBox[] array, int speed)
         {
+            
             for (int i = 0; i < array.Length; i++)
             {
-                array[i].Visible = true;
+                if (this.player.Bullet.Sprite.Bounds.IntersectsWith(array[i].Bounds))
+                {
+                    array[i].Visible = false;
+                    break;
+                }
+                //array[i].Visible = true;
                 array[i].Top += speed;
 
                 if (array[i].Top > this.Height)
@@ -155,7 +164,7 @@ namespace SpaceInvaders
             // Move the alien across the screen
             for (int i = 0; i < array.Length; i++)
             {
-               array[i].Visible = true;
+               //array[i].Visible = true;
 
                // Use the left property to move right
                 array[i].Left -= speed;

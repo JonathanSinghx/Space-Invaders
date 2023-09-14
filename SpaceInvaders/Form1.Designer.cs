@@ -53,6 +53,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Window;
             ClientSize = new Size(800, 575);
             Controls.Add(playerBox);
             Name = "Game";
