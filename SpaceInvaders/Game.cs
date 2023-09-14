@@ -26,6 +26,7 @@ namespace SpaceInvaders
         public Player Player1 { get => player; set => player = value; }
         public bool InitializeRound { get => initializeRound; set => initializeRound = value; }
 
+        
         //METHODS
 
         //Listening for which key is press
@@ -69,7 +70,7 @@ namespace SpaceInvaders
             this.player.Location = playerBox.Location;
         }
 
-        private void Load_aliens()
+        public void Load_aliens()
         {
             alienSpeed = 4;
 
@@ -91,7 +92,7 @@ namespace SpaceInvaders
                 aliens[i].BorderStyle = BorderStyle.None;
                 aliens[i].Visible = false; // ensure that the aliens doesn't show up on the start screen
                 this.Controls.Add(aliens[i]);
-                aliens[i].Location = new Point((i + 1) * 50, -50); //arrange the aliens on the screen
+                aliens[i].Location = new Point((i + 1) * 60, -60); //arrange the aliens on the screen
             }
 
             aliens[0].Image = alien1;
@@ -130,7 +131,27 @@ namespace SpaceInvaders
 
 
             }
-        }
+           
+            // Move the alien across the screen
+            for (int i = 0; i < array.Length; i++)
+            {
+               array[i].Visible = true;
 
+               // Use the left property to move left and right
+                array[i].Left += speed;
+   
+                if (array[i].Left < 0)//left boundary
+                {
+                    array[i].Left = 0;
+                }
+                else if (array[i].Left > this.Width) //right boundary
+                {
+                    array[i].Left = this.Width - array[i].Width;
+                }
+
+
+            }
+
+        }
     }
 }
