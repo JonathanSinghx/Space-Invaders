@@ -42,6 +42,7 @@
             playerBox.Size = new Size(75, 46);
             playerBox.TabIndex = 0;
             playerBox.TabStop = false;
+            playerBox.Click += playerBox_Click;
             // 
             // mainTimer
             // 

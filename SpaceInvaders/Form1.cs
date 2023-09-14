@@ -17,6 +17,9 @@ namespace SpaceInvaders
 
         }
 
+        private void playerBox_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
