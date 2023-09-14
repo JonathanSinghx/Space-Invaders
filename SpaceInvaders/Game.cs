@@ -131,27 +131,42 @@ namespace SpaceInvaders
 
 
             }
-           
+
+            /*// Move the alien across the screen
+            for (int i = 0; i < array.Length; i++)
+            {
+               array[i].Visible = true;
+
+               // Use the left property to move right
+                array[i].Left += speed;
+   
+                if (array[i].Right > this.Width)
+                {
+                    array[i].Location = new Point(-array[i].Width, array[i].Location.Y); 
+                 
+                }
+                else if (array[i].Left + array[i].Width < 0)
+                {
+                    array[i].Location = new Point(this.Width, array[i].Location.Y);
+                }
+
+            }*/
+
             // Move the alien across the screen
             for (int i = 0; i < array.Length; i++)
             {
                array[i].Visible = true;
 
-               // Use the left property to move left and right
-                array[i].Left += speed;
+               // Use the left property to move right
+                array[i].Left -= speed;
    
-                if (array[i].Left < 0)//left boundary
+                if (array[i].Right < 0)
                 {
-                    array[i].Left = 0;
+                    array[i].Location = new Point(this.Width, (i + 1)* 50); 
+                 
                 }
-                else if (array[i].Left > this.Width) //right boundary
-                {
-                    array[i].Left = this.Width - array[i].Width;
-                }
-
-
+             
             }
-
         }
     }
 }

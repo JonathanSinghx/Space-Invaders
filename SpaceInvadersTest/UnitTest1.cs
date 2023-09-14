@@ -1,4 +1,5 @@
-//using SpaceInvaders;
+using SpaceInvaders;
+using System.Windows.Forms;
 
 namespace SpaceInvadersTest
 {
@@ -8,8 +9,13 @@ namespace SpaceInvadersTest
         [TestMethod]
         public void givenSpaceInvaders_whenLoadAliensrun_thenAliensAreCreated()
         {
-            //Arrange
-              
+
+            // Arrange
+           
+            // Act
+
+            // Assert
+        
         }
     }
 }
