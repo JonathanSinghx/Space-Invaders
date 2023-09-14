@@ -21,11 +21,12 @@ namespace SpaceInvaders
             this.MoveLeft = false;
             this.MoveRight = false;
             this.Bullet = new Bullet();
+            initPlayerSpriteBox();
             //this.NextBullet = 0;
             //for (int i = 0; i < this.Bullets.Length; i++)
             //{
             //    this.Bullets[i] = new Bullet();
-                //this.Bullets[i].Render(this);
+            //this.Bullets[i].Render(this);
             //}
 
         }
@@ -35,10 +36,23 @@ namespace SpaceInvaders
         public bool MoveRight { get => moveRight; set => moveRight = value; }
         public bool MoveLeft { get => moveLeft; set => moveLeft = value; }
         public Bullet Bullet { get => bullet; set => bullet = value; }
+        public PictureBox PlayerSpriteBox { get => playerSpriteBox; set => playerSpriteBox = value; }
+
         //public int NextBullet { get => nextBullet; set => nextBullet = value; }
 
 
         //METHODS
+
+        void initPlayerSpriteBox()
+        {
+            PlayerSpriteBox = new PictureBox();
+            PlayerSpriteBox.BackColor = SystemColors.Highlight;
+            PlayerSpriteBox.Location = new Point(362, 517);
+            PlayerSpriteBox.Name = "playerBox";
+            PlayerSpriteBox.Size = new Size(75, 46);
+            PlayerSpriteBox.TabIndex = 0;
+            PlayerSpriteBox.TabStop = false;
+        }
 
         //moves the player when the move_ properties are set. 
         //The amount of movement is determined by the movement speed property.
@@ -87,6 +101,14 @@ namespace SpaceInvaders
                 this.Bullet.Sprite.Location = this.Bullet.Location;
             //}
 
+        }
+        public bool IsColliding(PictureBox alien)
+        {
+            if(alien.Visible == true)
+            {
+                return PlayerSpriteBox.Bounds.IntersectsWith(alien.Bounds);
+            }
+            return false;
         }
 
     }

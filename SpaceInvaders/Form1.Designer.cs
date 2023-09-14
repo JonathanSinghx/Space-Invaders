@@ -29,20 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            playerBox = new PictureBox();
             mainTimer = new System.Windows.Forms.Timer(components);
-            ((System.ComponentModel.ISupportInitialize)playerBox).BeginInit();
             SuspendLayout();
-            // 
-            // playerBox
-            // 
-            playerBox.BackColor = SystemColors.Highlight;
-            playerBox.Location = new Point(362, 517);
-            playerBox.Name = "playerBox";
-            playerBox.Size = new Size(75, 46);
-            playerBox.TabIndex = 0;
-            playerBox.TabStop = false;
-            playerBox.Click += playerBox_Click;
             // 
             // mainTimer
             // 
@@ -55,19 +43,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(800, 575);
-            Controls.Add(playerBox);
             Name = "Game";
             Text = "Space Invaders";
             Load += Game_Load;
             KeyDown += Form1_KeyDown;
             KeyUp += Form1_KeyUp;
-            ((System.ComponentModel.ISupportInitialize)playerBox).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private PictureBox playerBox;
         private System.Windows.Forms.Timer mainTimer;
     }
 }

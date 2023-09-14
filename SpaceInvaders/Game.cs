@@ -60,7 +60,7 @@ namespace SpaceInvaders
         private void mainTimer_Tick(object sender, EventArgs e)
         {
             player.move();
-            this.playerBox.Location = player.Location;
+            this.player.PlayerSpriteBox.Location = player.Location;
             MoveAliens(aliens, alienSpeed);
             this.player.fireBullet();
         }
@@ -69,8 +69,9 @@ namespace SpaceInvaders
         private void initalizeGame()
         {
             this.player = new Player(100);
-            this.player.Location = playerBox.Location;
+            this.player.Location = player.PlayerSpriteBox.Location;
             this.player.Bullet.Render(this);
+            Controls.Add(player.PlayerSpriteBox);
         }
 
         public void Load_aliens()
@@ -174,8 +175,29 @@ namespace SpaceInvaders
                     array[i].Location = new Point(this.Width, (i + 1)* 50); 
                  
                 }
-             
+
+                if (player.IsColliding(array[i]))
+                {
+                    //player.Kill();
+                    //if (player.Lives <= 0)
+                    //{
+                    GameOver();
+
+                    //}else
+                    //{
+                    //    player.Respawn();
+                    //}
+                }
+
             }
         }
+        private void GameOver()
+        {
+            mainTimer.Stop();
+            MessageBox.Show("Game Over!");
+            Close();
+        }
+
+
     }
 }
