@@ -31,6 +31,9 @@
             components = new System.ComponentModel.Container();
             mainTimer = new System.Windows.Forms.Timer(components);
             scoreLabel = new Label();
+            button1 = new Button();
+            label1 = new Label();
+            timer1 = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // mainTimer
@@ -49,13 +52,41 @@
             scoreLabel.TabIndex = 0;
             scoreLabel.Text = "SCORE:  0";
             // 
+            // button1
+            // 
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.ForeColor = Color.Yellow;
+            button1.Location = new Point(637, 20);
+            button1.Name = "button1";
+            button1.Size = new Size(113, 33);
+            button1.TabIndex = 1;
+            button1.Text = "Pause";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.Yellow;
+            label1.Location = new Point(368, 20);
+            label1.Name = "label1";
+            label1.Size = new Size(79, 31);
+            label1.TabIndex = 2;
+            label1.Text = "label1";
+            // 
+            // timer1
+            // 
+            timer1.Tick += gameTimer_Tick;
+            // 
             // Game
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Window;
             ClientSize = new Size(800, 575);
             Controls.Add(scoreLabel);
+            Controls.Add(label1);
+            Controls.Add(button1);
             Name = "Game";
             Text = "Space Invaders";
             Load += Game_Load;
@@ -65,8 +96,16 @@
             PerformLayout();
         }
 
+        private void PlayPauseButton_Clickk(object sender, EventArgs e)
+        {
+
+        }
+
         #endregion
         private System.Windows.Forms.Timer mainTimer;
         private Label scoreLabel;
+        private Button button1;
+        private Label label1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
