@@ -32,6 +32,8 @@
             playerBox = new PictureBox();
             mainTimer = new System.Windows.Forms.Timer(components);
             button1 = new Button();
+            label1 = new Label();
+            timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)playerBox).BeginInit();
             SuspendLayout();
             // 
@@ -54,17 +56,32 @@
             // 
             button1.Location = new Point(637, 27);
             button1.Name = "button1";
-            button1.Size = new Size(113, 43);
+            button1.Size = new Size(113, 33);
             button1.TabIndex = 1;
             button1.Text = "Pause";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Microsoft Yi Baiti", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(368, 28);
+            label1.Name = "label1";
+            label1.Size = new Size(60, 23);
+            label1.TabIndex = 2;
+            label1.Text = "label1";
+            // 
+            // timer1
+            // 
+            timer1.Tick += gameTimer_Tick;
             // 
             // Game
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 575);
+            Controls.Add(label1);
             Controls.Add(button1);
             Controls.Add(playerBox);
             Name = "Game";
@@ -74,6 +91,7 @@
             KeyUp += Form1_KeyUp;
             ((System.ComponentModel.ISupportInitialize)playerBox).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         private void PlayPauseButton_Clickk(object sender, EventArgs e)
@@ -88,5 +106,7 @@
         private PictureBox playerBox;
         private System.Windows.Forms.Timer mainTimer;
         private Button button1;
+        private Label label1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
