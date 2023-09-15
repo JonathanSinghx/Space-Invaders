@@ -29,23 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            playerBox = new PictureBox();
             mainTimer = new System.Windows.Forms.Timer(components);
             button1 = new Button();
             label1 = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
-            ((System.ComponentModel.ISupportInitialize)playerBox).BeginInit();
             SuspendLayout();
-            // 
-            // playerBox
-            // 
-            playerBox.BackColor = SystemColors.Highlight;
-            playerBox.Location = new Point(352, 517);
-            playerBox.Name = "playerBox";
-            playerBox.Size = new Size(75, 46);
-            playerBox.TabIndex = 0;
-            playerBox.TabStop = false;
-            playerBox.Click += playerBox_Click;
             // 
             // mainTimer
             // 
@@ -83,13 +71,11 @@
             ClientSize = new Size(800, 575);
             Controls.Add(label1);
             Controls.Add(button1);
-            Controls.Add(playerBox);
             Name = "Game";
             Text = "Space Invaders";
             Load += Game_Load;
             KeyDown += Form1_KeyDown;
             KeyUp += Form1_KeyUp;
-            ((System.ComponentModel.ISupportInitialize)playerBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -99,11 +85,7 @@
 
         }
 
-
-
         #endregion
-
-        private PictureBox playerBox;
         private System.Windows.Forms.Timer mainTimer;
         private Button button1;
         private Label label1;
