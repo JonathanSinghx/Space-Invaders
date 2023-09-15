@@ -4,13 +4,13 @@ namespace SpaceInvaders
     public partial class Game : Form
     {
 
-        private bool isGamePaused = false;
+
         public Game()
         {
             InitializeComponent();
             initalizeGame();
-            mainTimer.Start();
             Load_aliens();
+            mainTimer.Start();
             timer1.Start();
         }
 
@@ -39,30 +39,20 @@ namespace SpaceInvaders
             int seconds = gameTimeInSeconds % 60;
 
             //Display time in format mm:ss
-            label1.Text = $"Time: {minutes:D2}:{seconds:D2}";
+            label1.Text = $"{minutes:D2}:{seconds:D2}";
 
         }
         private void button1_Click(object sender, EventArgs e)
         {
             if (isGamePaused)
             {
-                timer1.Enabled = true;
-                mainTimer.Enabled = true;
-                button1.Text = "Pause";
-                alienSpeed = 4;
+                this.unPause();
             }
             else
             {
-                timer1.Enabled = false;
-                mainTimer.Enabled = false;
-                button1.Text = "Play";
-                alienSpeed = 0;
-
+                this.pause();
             }
-
-            isGamePaused = !isGamePaused; //Toggle the game state
         }
-
 
     }
 }

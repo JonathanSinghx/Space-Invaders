@@ -14,24 +14,13 @@ namespace SpaceInvaders
     {
         //PROPERTIES
         Player player;
-        //Round currentRound;
-        bool initializeRound;
         Alien[] aliens;
-        int alienSpeed;
-        //int frameCount;
+        private bool isGamePaused = false;
+        int currentLevel;
 
-
-        //CONSTRUCTORS
-        // public Game()
-        //{
-        //this.InitializeRound = false;
-
-        //}
 
         //GETTERS AND SETTERS
         public Player Player1 { get => player; set => player = value; }
-        public bool InitializeRound { get => initializeRound; set => initializeRound = value; }
-
 
         //METHODS
 
@@ -42,12 +31,12 @@ namespace SpaceInvaders
         /// <param name="e"></param>
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.A)
             {
                 player.MoveLeft = true;
                 player.MoveRight = false;
             }
-            else if (e.KeyCode == Keys.Right)
+            else if (e.KeyCode == Keys.D)
             {
                 player.MoveRight = true;
                 player.MoveLeft = false;
@@ -56,11 +45,11 @@ namespace SpaceInvaders
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.A)
             {
                 player.MoveLeft = false;
             }
-            else if (e.KeyCode == Keys.Right)
+            else if (e.KeyCode == Keys.D)
             {
                 player.MoveRight = false;
             }
@@ -70,7 +59,7 @@ namespace SpaceInvaders
         {
             player.move();
             this.player.SpriteBox.Location = player.Location;
-            MoveAliens(aliens, alienSpeed);
+            MoveAliens(aliens);
             this.player.fireBullet();
             this.scoreLabel.Text = "SCORE: " + this.player.Score;
         }
@@ -78,7 +67,8 @@ namespace SpaceInvaders
 
         private void initalizeGame()
         {
-            this.BackColor = Color.FromArgb(19, 35, 86); //
+            this.currentLevel = 1;
+            this.BackColor = Color.FromArgb(19, 35, 86); 
             this.player = new Player(100);
             this.player.Location = player.SpriteBox.Location;
             this.player.Bullet.Render(this);
@@ -87,7 +77,6 @@ namespace SpaceInvaders
 
         public void Load_aliens()
         {
-            alienSpeed = 4;
 
             //allow for the alien images to load from the image folder
             Image[] images = new Image[4];
@@ -123,22 +112,30 @@ namespace SpaceInvaders
         /// </summary>
         /// <param name="array">The array of PictureBoxes to move.</param>
         /// <param name="speed">The speed at which to move the PictureBoxes.</param>
-        public void MoveAliens(Alien[] aliens, int speed)
+        public void MoveAliens(Alien[] aliens)
         {
+            if(this.player.Score > 50 && this.player.Score % 50 == 0)
+            {
+                this.currentLevel += 1; 
+            }
             
             for (int i = 0; i < aliens.Length; i++)
             {
                 if (this.player.Bullet.SpriteBox.Bounds.IntersectsWith(aliens[i].SpriteBox.Bounds))
                 {
-                    aliens[i].SpriteBox.Visible = false;
+                    aliens[i].kill();
                     this.player.Score += 10;
                     break;
                 }
                 //array[i].Visible = true;
-                aliens[i].SpriteBox.Top += speed;
+                aliens[i].SpriteBox.Top += (aliens[i].MovementSpeed * this.currentLevel);
 
                 if (aliens[i].SpriteBox.Top > this.Height)
                 {
+                    if (aliens[i].Killed)
+                    {
+                        aliens[i].recycle();
+                    }
                     aliens[i].SpriteBox.Location = new Point((i + 1) * 50, -200);
                 }
             }
@@ -173,7 +170,7 @@ namespace SpaceInvaders
             {
 
                 // Move the PictureBox horizontally (to the left) by the specified speed.
-                aliens[i].SpriteBox.Left -= speed;
+                aliens[i].SpriteBox.Left -= aliens[i].MovementSpeed;
                 // Check if the PictureBox has moved completely out of the screen on the left side.
                 if (aliens[i].SpriteBox.Right < 0)
                 {
@@ -187,11 +184,13 @@ namespace SpaceInvaders
                     player.Kill();
                     if (player.Lives <= 0)
                     {
-                        GameOver();
-
+                        //GameOver();
                     }
                     else
-                    {   
+                    {
+                        // reset alien locations
+                        this.resetAlienLocations();
+                        this.pause();
                         player.Respawn();
                     }
                 }
@@ -204,6 +203,30 @@ namespace SpaceInvaders
             mainTimer.Stop();
             MessageBox.Show("Game Over!");
             Close();
+        }
+
+        private void unPause()
+        {
+            timer1.Enabled = true;
+            mainTimer.Enabled = true;
+            button1.Text = "Pause";
+            isGamePaused = false;
+        }
+
+        private void pause()
+        {
+            timer1.Enabled = false;
+            mainTimer.Enabled = false;
+            button1.Text = "Play";
+            isGamePaused = true;
+        }
+
+        void resetAlienLocations()
+        {
+            for(int i = 0; i < aliens.Length; i++)
+            {
+                this.aliens[i].SpriteBox.Location = new Point((i + 1) * 60, -60);
+            }
         }
     }
 }

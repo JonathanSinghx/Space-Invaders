@@ -17,7 +17,7 @@ namespace SpaceInvaders
         public static int DEFAULT_WIDTH = 75;
 
         //CONSTRUCTORS
-        public Player(int hitPoints): base(new Point(0,0), BASE_MOVEMENT_SPEED, 1)
+        public Player(int hitPoints): base(new Point(362, 517), BASE_MOVEMENT_SPEED, 1)
         {
             this.HitPoints = hitPoints;
             this.score = 0;
@@ -120,7 +120,7 @@ namespace SpaceInvaders
 
         public void Respawn()
         {
-            this.SpriteBox.Location = new Point(350, 450);
+            this.Location = this.SpriteBox.Location = new Point(362, 517);
         }
 
     }

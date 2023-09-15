@@ -71,12 +71,13 @@
             label1.ForeColor = Color.Yellow;
             label1.Location = new Point(368, 20);
             label1.Name = "label1";
-            label1.Size = new Size(79, 31);
+            label1.Size = new Size(72, 31);
             label1.TabIndex = 2;
-            label1.Text = "label1";
+            label1.Text = "00:00";
             // 
             // timer1
             // 
+            timer1.Interval = 1000;
             timer1.Tick += gameTimer_Tick;
             // 
             // Game
@@ -87,11 +88,12 @@
             Controls.Add(scoreLabel);
             Controls.Add(label1);
             Controls.Add(button1);
+            KeyPreview = true;
             Name = "Game";
             Text = "Space Invaders";
             Load += Game_Load;
-            KeyDown += Form1_KeyDown;
-            KeyUp += Form1_KeyUp;
+            KeyDown += this.Form1_KeyDown;
+            KeyUp += this.Form1_KeyUp;
             ResumeLayout(false);
             PerformLayout();
         }

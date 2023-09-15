@@ -12,10 +12,12 @@ namespace SpaceInvaders
         bool canShoot;
         bool collisionDamage;
         int fireRate;
-        int level; 
+        int level;
+        bool killed;
+        static int BASE_MOVEMENT_SPEED = 3;
 
         //CONSTRUCTORS
-        public Alien() : base(new Point(0, 0), 1, 1)
+        public Alien() : base(new Point(0, 0), BASE_MOVEMENT_SPEED, 1)
         {
             this.CanShoot = false;
             this.CollisionDamage = false;
@@ -35,7 +37,20 @@ namespace SpaceInvaders
         public bool CanShoot { get => canShoot; set => canShoot = value; }
         public bool CollisionDamage { get => collisionDamage; set => collisionDamage = value; }
         public int FireRate { get => fireRate; set => fireRate = value; }
+        public bool Killed { get => killed; set => killed = value; }
 
         //METHODS
+        public void kill()
+        {
+            this.Killed = true;
+            this.SpriteBox.Visible = false;
+        }
+
+        public void recycle()
+        {
+            this.Killed = false;
+            this.SpriteBox.Visible = true;
+        }
+
     }
 }
