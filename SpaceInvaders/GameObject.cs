@@ -12,6 +12,7 @@ namespace SpaceInvaders
         Point location;
         int movementSpeed;
         int width;
+        protected PictureBox spriteBox;
 
         //CONSTRUCTORS
         public GameObject(Point location, int movementSpeed, int width)
@@ -25,6 +26,7 @@ namespace SpaceInvaders
         public Point Location { get => location; set => location = value; }
         public int MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
         public int Width { get => width; set => width = value; }
+        public PictureBox SpriteBox { get => spriteBox; set => spriteBox = value; }
 
         //METHODS
     }

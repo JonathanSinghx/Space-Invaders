@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Numerics;
+using System.Windows.Forms;
 
 namespace SpaceInvaders
 {
@@ -6,11 +7,12 @@ namespace SpaceInvaders
     {
         //PROPERTIES
         int hitPoints;
+        int score;
         bool moveLeft;
         bool moveRight;
         Bullet bullet;
+        int lives;
         //int nextBullet;
-        private PictureBox playerSpriteBox;
         static int BASE_MOVEMENT_SPEED = 3;
         public static int DEFAULT_WIDTH = 75;
 
@@ -18,6 +20,8 @@ namespace SpaceInvaders
         public Player(int hitPoints): base(new Point(0,0), BASE_MOVEMENT_SPEED, 1)
         {
             this.HitPoints = hitPoints;
+            this.score = 0;
+            this.Lives = 3;
             this.MoveLeft = false;
             this.MoveRight = false;
             this.Bullet = new Bullet();
@@ -28,7 +32,6 @@ namespace SpaceInvaders
             //    this.Bullets[i] = new Bullet();
             //this.Bullets[i].Render(this);
             //}
-
         }
 
         //GETTERS AND SETTERS
@@ -36,7 +39,8 @@ namespace SpaceInvaders
         public bool MoveRight { get => moveRight; set => moveRight = value; }
         public bool MoveLeft { get => moveLeft; set => moveLeft = value; }
         public Bullet Bullet { get => bullet; set => bullet = value; }
-        public PictureBox PlayerSpriteBox { get => playerSpriteBox; set => playerSpriteBox = value; }
+        public int Score { get => score; set => score = value; }
+        public int Lives { get => lives; set => lives = value; }
 
         //public int NextBullet { get => nextBullet; set => nextBullet = value; }
 
@@ -45,17 +49,19 @@ namespace SpaceInvaders
 
         void initPlayerSpriteBox()
         {
-            PlayerSpriteBox = new PictureBox();
-            PlayerSpriteBox.BackColor = SystemColors.Highlight;
-            PlayerSpriteBox.Location = new Point(362, 517);
-            PlayerSpriteBox.Name = "playerBox";
-            PlayerSpriteBox.Size = new Size(75, 46);
-            PlayerSpriteBox.TabIndex = 0;
-            PlayerSpriteBox.TabStop = false;
+            this.SpriteBox = new PictureBox();
+            this.SpriteBox.BackColor = SystemColors.Highlight;
+            this.SpriteBox.Location = new Point(362, 517);
+            this.SpriteBox.Name = "playerBox";
+            this.SpriteBox.Size = new Size(75, 46);
+            this.SpriteBox.TabIndex = 0;
+            this.SpriteBox.TabStop = false;
         }
 
-        //moves the player when the move_ properties are set. 
-        //The amount of movement is determined by the movement speed property.
+        /// <summary>
+        ///  moves the player when the move_ properties are set. 
+        ///  The amount of movement is determined by the movement speed property.
+        /// </summary>
         public void move() 
         {
             if (this.MoveLeft && this.Location.X > 12)
@@ -78,7 +84,6 @@ namespace SpaceInvaders
             int y = this.Location.Y;
             this.Bullet.Location = new Point(x, y);
             //this.Bullets[this.NextBullet].Location = new Point(x, y);
-
         }
 
         
@@ -95,10 +100,8 @@ namespace SpaceInvaders
                 //{
                 //    this.Bullets[this.NextBullet].Sprite.Visible = true;
                 //}
-                
-
                 this.Bullet.Location = new Point(this.Bullet.Location.X, this.Bullet.Location.Y - 30);
-                this.Bullet.Sprite.Location = this.Bullet.Location;
+                this.Bullet.SpriteBox.Location = this.Bullet.Location;
             //}
 
         }
@@ -106,9 +109,18 @@ namespace SpaceInvaders
         {
             if(alien.Visible == true)
             {
-                return PlayerSpriteBox.Bounds.IntersectsWith(alien.Bounds);
+                return this.SpriteBox.Bounds.IntersectsWith(alien.Bounds);
             }
             return false;
+        }
+
+        public void Kill() { 
+            this.Lives--; 
+        }
+
+        public void Respawn()
+        {
+            this.SpriteBox.Location = new Point(350, 450);
         }
 
     }
