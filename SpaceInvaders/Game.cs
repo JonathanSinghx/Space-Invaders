@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
 
 namespace SpaceInvaders
 {
@@ -18,9 +22,10 @@ namespace SpaceInvaders
 
 
         //CONSTRUCTORS
-        //public Game()
+        // public Game()
         //{
-        //   this.InitializeRound = false;
+        //this.InitializeRound = false;
+
         //}
 
         //GETTERS AND SETTERS
@@ -42,8 +47,8 @@ namespace SpaceInvaders
                 player.MoveLeft = true;
                 player.MoveRight = false;
             }
-            else if (e.KeyCode == Keys.Right) 
-            { 
+            else if (e.KeyCode == Keys.Right)
+            {
                 player.MoveRight = true;
                 player.MoveLeft = false;
             }
@@ -108,12 +113,16 @@ namespace SpaceInvaders
 
         }
 
-        //private void moveAliensTimer1_Tick(object sender, EventArgs e)
-        //{
-        //    MoveAliens(aliens, alienSpeed);
-        //}
 
         // access the alien array and display aliens moving from top to bottom
+
+        /// <summary>
+        /// Moves an array of PictureBoxes downward by a specified speed.
+        /// Moves a collection of PictureBoxes horizontally across the screen.
+        /// Moves a collection of PictureBoxes horizontally across the screen in the opposite direction (left).
+        /// </summary>
+        /// <param name="array">The array of PictureBoxes to move.</param>
+        /// <param name="speed">The speed at which to move the PictureBoxes.</param>
         public void MoveAliens(Alien[] aliens, int speed)
         {
             
@@ -135,35 +144,40 @@ namespace SpaceInvaders
             }
 
             /*// Move the alien across the screen
+            // * // Loop through the PictureBox array.
             for (int i = 0; i < aliens.Length; i++)
             {
                aliens[i].Visible = true;
 
-               // Use the left property to move right
+                // Move the PictureBox horizontally (to the right) by the specified speed.
                 aliens[i].Left += speed;
-   
+
+                // Check if the PictureBox has moved beyond the right edge of the screen.
                 if (aliens[i].Right > this.Width)
                 {
+                    // Reset the PictureBox's location to the left edge, just outside the screen.
                     aliens[i].Location = new Point(-array[i].Width, aliens[i].Location.Y); 
                  
                 }
+                // Check if the PictureBox has moved beyond the left edge of the screen.
                 else if (aliens[i].Left + aliens[i].Width < 0)
                 {
+                    // Reset the PictureBox's location to the right edge, just outside the screen.
                     aliens[i].Location = new Point(this.Width, aliens[i].Location.Y);
-                }
 
+                }
             }*/
 
-            // Move the alien across the screen
+            // Loop through the PictureBox array.
             for (int i = 0; i < aliens.Length; i++)
             {
-                //aliens[i].Visible = true;
 
-                // Use the left property to move right
+                // Move the PictureBox horizontally (to the left) by the specified speed.
                 aliens[i].SpriteBox.Left -= speed;
-   
+                // Check if the PictureBox has moved completely out of the screen on the left side.
                 if (aliens[i].SpriteBox.Right < 0)
                 {
+                    // Reset the PictureBox's location to the right edge, at a new vertical position.
                     aliens[i].SpriteBox.Location = new Point(this.Width, (i + 1)* 50); 
                  
                 }
@@ -183,6 +197,7 @@ namespace SpaceInvaders
                 }
 
             }
+
         }
         private void GameOver()
         {
@@ -190,7 +205,5 @@ namespace SpaceInvaders
             MessageBox.Show("Game Over!");
             Close();
         }
-
-
     }
 }
