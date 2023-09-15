@@ -11,10 +11,13 @@ namespace SpaceInvadersTest
         {
 
             // Arrange
-           
+            Game game = new Game();
+
             // Act
+            game.Load_aliens();
 
             // Assert
+            Assert.AreEqual(4, game.alienSpeed);
         
         }
     }

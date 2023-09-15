@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
 
 namespace SpaceInvaders
 {
@@ -13,13 +17,14 @@ namespace SpaceInvaders
         //Round currentRound;
         bool initializeRound;
         PictureBox[] aliens;
-        int alienSpeed;
-
+        public int alienSpeed;
+       
 
         //CONSTRUCTORS
-        //public Game()
+        // public Game()
         //{
-        //   this.InitializeRound = false;
+        //this.InitializeRound = false;
+
         //}
 
         //GETTERS AND SETTERS
@@ -27,6 +32,8 @@ namespace SpaceInvaders
         public bool InitializeRound { get => initializeRound; set => initializeRound = value; }
 
         
+
+
         //METHODS
 
         //Listening for which key is press
@@ -37,8 +44,8 @@ namespace SpaceInvaders
                 player.MoveLeft = true;
                 player.MoveRight = false;
             }
-            else if (e.KeyCode == Keys.Right) 
-            { 
+            else if (e.KeyCode == Keys.Right)
+            {
                 player.MoveRight = true;
                 player.MoveLeft = false;
             }
@@ -116,57 +123,79 @@ namespace SpaceInvaders
             MoveAliens(aliens, alienSpeed);
         }
 
-        // access the alien array and display aliens moving from top to bottom
-        private void MoveAliens(PictureBox[] array, int speed)
+        /// <summary>
+        /// Moves an array of PictureBoxes downward by a specified speed.
+        /// Moves a collection of PictureBoxes horizontally across the screen.
+        /// Moves a collection of PictureBoxes horizontally across the screen in the opposite direction (left).
+        /// </summary>
+        /// <param name="array">The array of PictureBoxes to move.</param>
+        /// <param name="speed">The speed at which to move the PictureBoxes.</param>
+        public void MoveAliens(PictureBox[] array, int speed)
         {
+            //Loop through the PictureBox array.
             for (int i = 0; i < array.Length; i++)
             {
+                // Make the PictureBox visible.
                 array[i].Visible = true;
+
+                // Move the PictureBox downward by the specified speed.
                 array[i].Top += speed;
 
+                // Check if the PictureBox has moved out of the visible area.
                 if (array[i].Top > this.Height)
                 {
+                    // Reset the PictureBox's location to a new position above the screen.
                     array[i].Location = new Point((i + 1) * 50, -200);
                 }
-
-
             }
 
-            /*// Move the alien across the screen
+
+            /*// Loop through the PictureBox array.
             for (int i = 0; i < array.Length; i++)
             {
-               array[i].Visible = true;
+                // Make the PictureBox visible.
+                array[i].Visible = true;
 
-               // Use the left property to move right
+                // Move the PictureBox horizontally (to the right) by the specified speed.
                 array[i].Left += speed;
-   
+
+                // Check if the PictureBox has moved beyond the right edge of the screen.
                 if (array[i].Right > this.Width)
                 {
-                    array[i].Location = new Point(-array[i].Width, array[i].Location.Y); 
-                 
+                    // Reset the PictureBox's location to the left edge, just outside the screen.
+                    array[i].Location = new Point(-array[i].Width, array[i].Location.Y);
                 }
+                // Check if the PictureBox has moved beyond the left edge of the screen.
                 else if (array[i].Left + array[i].Width < 0)
                 {
+                    // Reset the PictureBox's location to the right edge, just outside the screen.
                     array[i].Location = new Point(this.Width, array[i].Location.Y);
                 }
-
             }*/
 
-            // Move the alien across the screen
+
+            // Loop through the PictureBox array.
             for (int i = 0; i < array.Length; i++)
             {
-               array[i].Visible = true;
+                // Make the PictureBox visible.
+                array[i].Visible = true;
 
-               // Use the left property to move right
+                // Move the PictureBox horizontally (to the left) by the specified speed.
                 array[i].Left -= speed;
-   
+
+                // Check if the PictureBox has moved completely out of the screen on the left side.
                 if (array[i].Right < 0)
                 {
-                    array[i].Location = new Point(this.Width, (i + 1)* 50); 
-                 
+                    // Reset the PictureBox's location to the right edge, at a new vertical position.
+                    array[i].Location = new Point(this.Width, (i + 1) * 50);
                 }
-             
             }
+
         }
+
+        
+
+
+
     }
 }
