@@ -12,7 +12,7 @@ namespace SpaceInvaders
         Player player;
         //Round currentRound;
         bool initializeRound;
-        PictureBox[] aliens;
+        Alien[] aliens;
         int alienSpeed;
         //int frameCount;
 
@@ -27,10 +27,14 @@ namespace SpaceInvaders
         public Player Player1 { get => player; set => player = value; }
         public bool InitializeRound { get => initializeRound; set => initializeRound = value; }
 
-        
+
         //METHODS
 
-        //Listening for which key is press
+        /// <summary>
+        ///  Listening for which key is press
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
@@ -60,18 +64,20 @@ namespace SpaceInvaders
         private void mainTimer_Tick(object sender, EventArgs e)
         {
             player.move();
-            this.player.PlayerSpriteBox.Location = player.Location;
+            this.player.SpriteBox.Location = player.Location;
             MoveAliens(aliens, alienSpeed);
             this.player.fireBullet();
+            this.scoreLabel.Text = "SCORE: " + this.player.Score;
         }
 
 
         private void initalizeGame()
         {
+            this.BackColor = Color.FromArgb(19, 35, 86); //
             this.player = new Player(100);
-            this.player.Location = player.PlayerSpriteBox.Location;
+            this.player.Location = player.SpriteBox.Location;
             this.player.Bullet.Render(this);
-            Controls.Add(player.PlayerSpriteBox);
+            Controls.Add(player.SpriteBox);
         }
 
         public void Load_aliens()
@@ -79,114 +85,101 @@ namespace SpaceInvaders
             alienSpeed = 4;
 
             //allow for the alien images to load from the image folder
-            Image alien1 = Image.FromFile("..\\images\\alien1.png");
-            Image alien2 = Image.FromFile("..\\images\\alien2.png");
-            Image alien3 = Image.FromFile("..\\images\\alien3.png");
-            Image alien4 = Image.FromFile("..\\images\\alien4.png");
+            Image[] images = new Image[4];
+            for(int i = 0; i <4; i++)
+            {
+                images[i] = Image.FromFile("..\\images\\alien"+(i+1)+".png");
+            }
+
 
             //create arrary for 10 picture boxes 
-            aliens = new PictureBox[14];
+            aliens = new Alien[14];
 
             //Initialize the alien picture box
             for (int i = 0; i < aliens.Length; i++)
             {
-                aliens[i] = new PictureBox();
-                aliens[i].Size = new Size(40, 40);
-                aliens[i].SizeMode = PictureBoxSizeMode.Zoom;
-                aliens[i].BorderStyle = BorderStyle.None;
+                aliens[i] = new Alien();
+                aliens[i].initSprite();
                 //aliens[i].Visible = false; // ensure that the aliens doesn't show up on the start screen
-                this.Controls.Add(aliens[i]);
-                aliens[i].Location = new Point((i + 1) * 60, -60); //arrange the aliens on the screen
+                this.Controls.Add(aliens[i].SpriteBox);
+                aliens[i].SpriteBox.Location = new Point((i + 1) * 60, -60); //arrange the aliens on the screen
+                aliens[i].SpriteBox.Image = images[3];
             }
 
-            aliens[0].Image = alien1;
-            aliens[1].Image = alien2;
-            aliens[2].Image = alien3;
-            aliens[3].Image = alien4;
-            aliens[4].Image = alien2;
-            aliens[5].Image = alien3;
-            aliens[6].Image = alien3;
-            aliens[7].Image = alien2;
-            aliens[8].Image = alien4;
-            aliens[9].Image = alien1;
-            aliens[10].Image = alien4;
-            aliens[11].Image = alien2;
-            aliens[12].Image = alien3;
-            aliens[13].Image = alien1;
+        }
 
-        }
-        private void moveAliensTimer1_Tick(object sender, EventArgs e)
-        {
-            MoveAliens(aliens, alienSpeed);
-        }
+        //private void moveAliensTimer1_Tick(object sender, EventArgs e)
+        //{
+        //    MoveAliens(aliens, alienSpeed);
+        //}
 
         // access the alien array and display aliens moving from top to bottom
-        private void MoveAliens(PictureBox[] array, int speed)
+        public void MoveAliens(Alien[] aliens, int speed)
         {
             
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < aliens.Length; i++)
             {
-                if (this.player.Bullet.Sprite.Bounds.IntersectsWith(array[i].Bounds))
+                if (this.player.Bullet.SpriteBox.Bounds.IntersectsWith(aliens[i].SpriteBox.Bounds))
                 {
-                    array[i].Visible = false;
+                    aliens[i].SpriteBox.Visible = false;
+                    this.player.Score += 10;
                     break;
                 }
                 //array[i].Visible = true;
-                array[i].Top += speed;
+                aliens[i].SpriteBox.Top += speed;
 
-                if (array[i].Top > this.Height)
+                if (aliens[i].SpriteBox.Top > this.Height)
                 {
-                    array[i].Location = new Point((i + 1) * 50, -200);
+                    aliens[i].SpriteBox.Location = new Point((i + 1) * 50, -200);
                 }
-
-
             }
 
             /*// Move the alien across the screen
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < aliens.Length; i++)
             {
-               array[i].Visible = true;
+               aliens[i].Visible = true;
 
                // Use the left property to move right
-                array[i].Left += speed;
+                aliens[i].Left += speed;
    
-                if (array[i].Right > this.Width)
+                if (aliens[i].Right > this.Width)
                 {
-                    array[i].Location = new Point(-array[i].Width, array[i].Location.Y); 
+                    aliens[i].Location = new Point(-array[i].Width, aliens[i].Location.Y); 
                  
                 }
-                else if (array[i].Left + array[i].Width < 0)
+                else if (aliens[i].Left + aliens[i].Width < 0)
                 {
-                    array[i].Location = new Point(this.Width, array[i].Location.Y);
+                    aliens[i].Location = new Point(this.Width, aliens[i].Location.Y);
                 }
 
             }*/
 
             // Move the alien across the screen
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < aliens.Length; i++)
             {
-               //array[i].Visible = true;
+                //aliens[i].Visible = true;
 
-               // Use the left property to move right
-                array[i].Left -= speed;
+                // Use the left property to move right
+                aliens[i].SpriteBox.Left -= speed;
    
-                if (array[i].Right < 0)
+                if (aliens[i].SpriteBox.Right < 0)
                 {
-                    array[i].Location = new Point(this.Width, (i + 1)* 50); 
+                    aliens[i].SpriteBox.Location = new Point(this.Width, (i + 1)* 50); 
                  
                 }
 
-                if (player.IsColliding(array[i]))
+                if (player.IsColliding(aliens[i].SpriteBox))
                 {
-                    //player.Kill();
-                    //if (player.Lives <= 0)
-                    //{
-                    GameOver();
+                    player.Kill();
+                    if (player.Lives <= 0)
+                    {
+                        GameOver();
 
-                    //}else
-                    //{
-                    //    player.Respawn();
-                    //}
+                    }
+                    else
+                    {   
+                        player.Respawn();
+                    }
                 }
 
             }
